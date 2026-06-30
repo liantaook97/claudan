@@ -1,0 +1,59 @@
+% !TEX program = xelatex
+% =============================================================
+%  fdu-beamer —— 复旦答辩 Beamer 模板（精简骨架）
+%  · 必须使用 XeLaTeX 编译
+%  · 完整版式示例（数据卡片 / 标签卡 / 流程图 / 表格等）见 example.tex
+% =============================================================
+\documentclass[aspectratio=169,10pt]{beamer}
+
+\usetheme{claudan}
+
+% ------------------------- 基本信息 -------------------------
+\title{论文标题}
+\subtitle{English Subtitle}
+\author{你的姓名}
+\institute{你的学院}
+\date{2026 年 6 月}
+\fducoverinfo{
+  学号 = {学号},
+  指导教师 = {导师姓名 \quad 教授},
+  专业 = {专业名称},
+  答辩日期 = {2026 年 6 月}
+}
+
+\begin{document}
+
+% ------------------------- 封面 -------------------------
+\fdutitlepage
+
+% ------------------------- 目录 -------------------------
+\fduagenda{
+  \begin{columns}[T,onlytextwidth]
+    \column{0.48\textwidth}
+      \fduagendaitem{01}{第一章标题}{Chapter One}
+      \fduagendaitem{02}{第二章标题}{Chapter Two}
+    \column{0.48\textwidth}
+      \fduagendaitem{03}{第三章标题}{Chapter Three}
+      \fduagendaitem{04}{第四章标题}{Chapter Four}
+  \end{columns}
+}
+
+% ------------------------- 章节分隔页 -------------------------
+\fdudivider{01}{第一章标题}{Chapter One Title}
+
+% ------------------------- 内容页 -------------------------
+\begin{frame}
+  \fducontenthead{01 章节名}{本页标题}{Slide Title}
+  \begin{itemize}
+    \item 在这里填写第一个要点。
+    \item 在这里填写第二个要点。
+  \end{itemize}
+\end{frame}
+
+% 复制上面的 frame 添加更多内容页；
+% 更多版式（\fducard \fdudatacard \fdulabelcard \fdunumitem 等）见 example.tex
+
+% ------------------------- 致谢页 -------------------------
+\fduthankyou{感谢聆听}{THANK YOU FOR YOUR ATTENTION}
+
+\end{document}

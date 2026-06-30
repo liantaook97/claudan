@@ -1,0 +1,22 @@
+# LaTeX 编译产物
+*.aux
+*.log
+*.nav
+*.snm
+*.toc
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.vrb
+*.bbl
+*.blg
+*.run.xml
+
+# PDF：保留 example.pdf 作为预览，其余忽略
+*.pdf
+!example.pdf
+
+# 系统与编辑器
+.DS_Store
+.claude/

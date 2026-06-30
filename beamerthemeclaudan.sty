@@ -1,0 +1,246 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemefdu-beamer}[2026/06/30 Fudan dissertation defense beamer theme]
+
+\RequirePackage[fontset=none]{ctex}
+\RequirePackage{fontspec}
+\RequirePackage{graphicx}
+\RequirePackage{booktabs}
+\RequirePackage{tikz}
+\RequirePackage{xcolor}
+\RequirePackage{etoolbox}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{colortbl}
+\RequirePackage{pgfkeys}
+\RequirePackage{multicol}
+\usetikzlibrary{calc,positioning,arrows.meta}
+
+\mode<presentation>
+
+\definecolor{FudanBlue}{HTML}{0E2F66}
+\definecolor{AccentBlue}{HTML}{1E5FB0}
+\definecolor{Ink}{HTML}{16202E}
+\definecolor{Sub}{HTML}{5B6675}
+\definecolor{Muted}{HTML}{9AA3B2}
+\definecolor{Tint}{HTML}{F4F6FA}
+\definecolor{Line}{HTML}{E5E8EE}
+
+\newcommand{\fdu@studentid}{}
+\newcommand{\fdu@advisor}{}
+\newcommand{\fdu@major}{}
+\newcommand{\fdu@defensedate}{}
+\pgfkeys{
+  /fducover/.is family,
+  /fducover,
+  学号/.store in=\fdu@studentid,
+  指导教师/.store in=\fdu@advisor,
+  专业/.store in=\fdu@major,
+  答辩日期/.store in=\fdu@defensedate
+}
+\newcommand{\fducoverinfo}[1]{\pgfkeys{/fducover,#1}}
+
+% 封面信息标签:在固定宽度(4 个全角字宽)内对中文字符做两端分散对齐,
+% 使「专业」「答辩日期」等不同字数的标签等宽且右缘对齐,值列随之对齐。
+\newcommand{\fdufield}[1]{%
+  \leavevmode\hbox to 4\ccwd{\@tfor\fdu@ch:=#1\do{\fdu@ch\hfill}\unskip}%
+}
+
+\IfFontExistsTF{Arial}
+  {\setsansfont{Arial}[Ligatures=TeX,Scale=MatchLowercase]}
+  {\setsansfont{Latin Modern Sans}[Ligatures=TeX,Scale=MatchLowercase]}
+% 中文正文用思源宋体(serif)。beamer 默认走 \sffamily,而 xeCJK 让中文跟随西文字族,
+% 故把 CJK 的 rm 与 sf 都设为宋体,保证无论西文是 rm/sf,正文中文都呈现宋体。
+\IfFontExistsTF{Source Han Serif SC}
+  {\setCJKmainfont{Source Han Serif SC}\setCJKsansfont{Source Han Serif SC}}
+  {\IfFontExistsTF{Noto Serif CJK SC}
+    {\setCJKmainfont{Noto Serif CJK SC}\setCJKsansfont{Noto Serif CJK SC}}
+    {\IfFontExistsTF{思源宋体}
+      {\setCJKmainfont{思源宋体}\setCJKsansfont{思源宋体}}
+      {\IfFontExistsTF{Songti SC}{\setCJKmainfont{Songti SC}\setCJKsansfont{Songti SC}}{}}}}
+% 专用黑体字族 fduhei,供 \fdusans 在标签/页脚/卡片标题等处使用
+\IfFontExistsTF{Source Han Sans SC}
+  {\setCJKfamilyfont{fduhei}{Source Han Sans SC}}
+  {\IfFontExistsTF{Noto Sans CJK SC}
+    {\setCJKfamilyfont{fduhei}{Noto Sans CJK SC}}
+    {\IfFontExistsTF{思源黑体}
+      {\setCJKfamilyfont{fduhei}{思源黑体}}
+      {\IfFontExistsTF{PingFang SC}
+        {\setCJKfamilyfont{fduhei}{PingFang SC}}
+        {\IfFontExistsTF{Songti SC}{\setCJKfamilyfont{fduhei}{Songti SC}}{}}}}}
+
+\newcommand{\fdusans}{\CJKfamily{fduhei}}
+\renewcommand{\familydefault}{\sfdefault}
+\linespread{1.18}
+
+\setbeamercolor{normal text}{fg=Ink,bg=white}
+\setbeamercolor{structure}{fg=AccentBlue}
+\setbeamercolor{frametitle}{fg=FudanBlue}
+\setbeamercolor{title}{fg=FudanBlue}
+\setbeamercolor{subtitle}{fg=Sub}
+\setbeamercolor{author}{fg=Ink}
+\setbeamercolor{institute}{fg=Sub}
+\setbeamercolor{date}{fg=Sub}
+\setbeamerfont{title}{series=\bfseries,size=\LARGE}
+\setbeamerfont{subtitle}{size=\normalsize}
+\setbeamerfont{frametitle}{series=\bfseries,size=\Large}
+\setbeamerfont{normal text}{size=\small}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{itemize item}{\color{AccentBlue}\raisebox{-0.05ex}{\normalsize\textbullet}}
+\setbeamertemplate{itemize subitem}{\color{AccentBlue}\raisebox{0.05ex}{\footnotesize\textbullet}}
+% 参考文献:用 [1] 数字编号替代 beamer 默认图标;编号用浅灰 Muted,正文用 Sub
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+\setbeamercolor{bibliography item}{fg=Muted}
+\setbeamercolor{bibliography entry author}{fg=Sub}
+\setbeamercolor{bibliography entry title}{fg=Sub}
+\setbeamercolor{bibliography entry location}{fg=Sub}
+\setbeamercolor{bibliography entry note}{fg=Sub}
+\setlength{\parskip}{0.45em}
+
+\setbeamertemplate{footline}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % 进度条:抬高,距页面底边一段距离
+    \fill[Line] ([yshift=22pt]current page.south west)
+      rectangle ([yshift=23.8pt]current page.south east);
+    \ifnum\inserttotalframenumber>0
+      \fill[AccentBlue] ([yshift=22pt]current page.south west)
+        rectangle ([yshift=23.8pt,xshift={\paperwidth*\insertframenumber/\inserttotalframenumber}]current page.south west);
+    \fi
+    % 标题:进度条下方,左下角
+    \node[anchor=north west,text=Muted,inner sep=0pt] at
+      ([xshift=1.0cm,yshift=18pt]current page.south west)
+      {\fdusans\scriptsize\inserttitle};
+    % 页码:进度条下方,右下角
+    \node[anchor=north east,text=Muted,inner sep=0pt] at
+      ([xshift=-1.0cm,yshift=18pt]current page.south east)
+      {\scriptsize\insertframenumber\,/\,\inserttotalframenumber};
+  \end{tikzpicture}%
+  \vspace*{16pt}%
+}
+
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[FudanBlue] (current page.north west)
+      rectangle ($(current page.south west)+(0.34\paperwidth,0)$);
+    % 校徽及英文校名竖向组合(白色 negative),置顶居中于蓝栏
+    \node[anchor=north west] at ($(current page.north west)+(0.95cm,-1.35cm)$)
+      {\includegraphics[height=4.0cm]{figures/fdu-logo-vertical-white.png}};
+    \node[anchor=north west,align=left,text width=0.54\paperwidth] at ($(current page.north west)+(6.25cm,-1.55cm)$)
+      {{\bfseries\fontsize{22}{28}\selectfont\color{FudanBlue}\inserttitle}\\[10pt]
+       {\normalsize\color{Sub}\insertsubtitle}};
+    \draw[Line,line width=0.6pt]
+      ($(current page.north west)+(6.25cm,-6.05cm)$) --
+      ($(current page.north west)+(6.25cm+0.54\paperwidth,-6.05cm)$);
+    \node[anchor=north west,align=left] at ($(current page.north west)+(6.25cm,-6.40cm)$)
+      {%
+        \renewcommand{\arraystretch}{1.25}%
+        \footnotesize\color{Sub}%
+        \begin{tabular}{@{}>{\fdusans}l l @{\hskip 0.9cm} >{\fdusans}l l@{}}
+          \fdufield{答辩人} & {\color{Ink}\insertauthor} &
+          \fdufield{学号} & {\color{Ink}\fdu@studentid}\\
+          \fdufield{指导教师} & {\color{Ink}\fdu@advisor} &
+          \fdufield{学院} & {\color{Ink}\insertinstitute}\\
+          \fdufield{专业} & {\color{Ink}\fdu@major} &
+          \fdufield{答辩日期} & {\color{Ink}\fdu@defensedate}\\
+        \end{tabular}%
+      };
+  \end{tikzpicture}%
+}
+
+\newcommand{\fdutitlepage}{%
+  \begin{frame}[plain,noframenumbering]
+    \titlepage
+  \end{frame}
+}
+
+\newcommand{\fducontenthead}[3]{%
+  {\fdusans\small\bfseries\color{AccentBlue}#1}\par\vspace{2pt}%
+  {\bfseries\Large\color{FudanBlue}#2}\par\vspace{-4pt}%
+  {\small\color{Muted}#3}\par\vspace{10pt}%
+}
+
+\newcommand{\fdudivider}[3]{%
+  \begin{frame}[plain,noframenumbering]
+    \begin{tikzpicture}[remember picture,overlay]
+      \fill[FudanBlue] (current page.north west) rectangle (current page.south east);
+      \node[anchor=west,text=white,opacity=0.10] at ($(current page.west)+(1.25cm,1.62cm)$)
+        {\fontsize{120}{120}\selectfont\bfseries #1};
+      \node[anchor=west,text=white,align=left] at ($(current page.west)+(1.45cm,-0.18cm)$)
+        {\fontsize{30}{36}\selectfont\bfseries #2};
+      \node[anchor=west,text=white,opacity=0.64,align=left] at ($(current page.west)+(1.48cm,-1.28cm)$)
+        {\large #3};
+    \end{tikzpicture}
+  \end{frame}
+}
+
+\newcommand{\fduagenda}[1]{%
+  \begin{frame}
+    \fducontenthead{AGENDA}{目\quad 录}{Outline}
+    #1
+  \end{frame}
+}
+\newcommand{\fduagendaitem}[3]{%
+  \noindent\begin{minipage}[t]{\linewidth}
+    {\color{Muted}\Large\bfseries #1}\quad
+    {\color{Ink}\bfseries #2}\par
+    \hspace*{2.35em}{\small\color{Muted}#3}
+  \end{minipage}\par\vspace{12pt}
+}
+
+\newcommand{\fducard}[2]{%
+  \noindent\begin{tikzpicture}
+    \node[inner sep=8pt,outer sep=0pt,fill=Tint,draw=Line,rounded corners=2pt,text width=\dimexpr\linewidth-18pt\relax,align=left]
+      {{\fdusans\bfseries\color{FudanBlue}#1}\par\vspace{3pt}{\color{Ink}#2}};
+  \end{tikzpicture}
+}
+
+\newcommand{\fdudatacard}[3]{%
+  \begin{tikzpicture}
+    \node[inner sep=10pt,fill=Tint,draw=Line,rounded corners=2pt,text width=\dimexpr\linewidth-22pt\relax,align=left]
+      {{\color{FudanBlue}\fontsize{28}{32}\selectfont\bfseries #1}\par
+       {\fdusans\small\color{Sub}#2}\par\vspace{4pt}
+       {\scriptsize\color{Muted}#3}};
+  \end{tikzpicture}
+}
+
+% 标号条目:左侧大号标号(C1/1/A…)+ 标题 + 说明 + 分隔线
+\newcommand{\fdunumitem}[3]{%
+  \noindent
+  \begin{minipage}[t]{0.085\linewidth}
+    {\color{AccentBlue}\fontsize{23}{23}\selectfont\bfseries\strut #1}%
+  \end{minipage}%
+  \hspace{0.6em}%
+  \begin{minipage}[t]{0.86\linewidth}
+    {\bfseries\color{Ink}\strut #2}\par
+    {\small\color{Sub}#3}
+  \end{minipage}\par
+  \vspace{3pt}{\color{Line}\hrule height 0.6pt}\vspace{3pt}
+}
+
+% 标签卡片:顶部色条 + 小标签 + 标题 + 说明的边框卡片
+\newcommand{\fdulabelcard}[3]{%
+  \begin{tikzpicture}
+    \node[inner sep=10pt,draw=Line,fill=white,rounded corners=2pt,text width=\dimexpr\linewidth-22pt\relax,align=left]
+      {\color{FudanBlue}\rule{\linewidth}{2.4pt}\par\vspace{7pt}
+       {\fdusans\scriptsize\bfseries\color{AccentBlue}#1}\par
+       {\bfseries\color{Ink}#2}\par\vspace{4pt}
+       {\small\color{Sub}#3}};
+  \end{tikzpicture}
+}
+
+\newcommand{\fduthankyou}[2]{%
+  \begin{frame}[plain,noframenumbering]
+    \begin{tikzpicture}[remember picture,overlay]
+      \fill[FudanBlue] (current page.north west) rectangle (current page.south east);
+      \node[anchor=center,text=white,align=center,text width=0.85\paperwidth] at (current page.center)
+        {{\includegraphics[height=1.7cm]{figures/fdu-logo-axis-white.png}}\par\vspace{18pt}
+         {\fontsize{32}{38}\selectfont\bfseries #1}\par\vspace{8pt}
+         {\small\color{Line}#2}\par\vspace{12pt}
+         {\color{AccentBlue}\rule{0.8cm}{1pt}}\par\vspace{12pt}
+         {\fdusans\footnotesize\color{Line} 敬请各位评审专家批评指正}\par
+         {\fdusans\footnotesize\color{Line}\insertauthor\quad \insertdate}};
+    \end{tikzpicture}
+  \end{frame}
+}
+
+\mode<all>

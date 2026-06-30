@@ -1,0 +1,144 @@
+% !TEX program = xelatex
+\documentclass[aspectratio=169,10pt]{beamer}
+
+\usetheme{claudan}
+
+\title{数字技术扩散与城市公共服务能力研究}
+\subtitle{Digital Technology Diffusion and Urban Public Service Capacity}
+\author{张明}
+\institute{社会发展与公共政策学院}
+\date{2026 年 6 月}
+\fducoverinfo{
+  学号 = {22110690001},
+  指导教师 = {李华 \quad 教授},
+  专业 = {社会学},
+  答辩日期 = {2026 年 6 月}
+}
+
+\begin{document}
+
+\fdutitlepage
+
+\fduagenda{
+  \begin{columns}[T,onlytextwidth]
+    \column{0.48\textwidth}
+      \fduagendaitem{01}{研究背景与问题}{Background \& Questions}
+      \fduagendaitem{02}{理论框架与假设}{Theory \& Hypotheses}
+      \fduagendaitem{03}{数据、变量与方法}{Data \& Methods}
+    \column{0.48\textwidth}
+      \fduagendaitem{04}{实证结果与稳健性}{Results \& Robustness}
+      \fduagendaitem{05}{结论、创新与展望}{Conclusions \& Contributions}
+  \end{columns}
+}
+
+\fdudivider{01}{研究背景与问题}{Background \& Research Questions}
+
+\begin{frame}
+  \fducontenthead{01 研究背景}{现实背景与研究问题}{Practical Context \& Research Questions}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.56\textwidth}
+      \begin{itemize}
+        \item 数字技术正在进入城市治理的日常流程，但不同城市的公共服务响应能力存在持续差异。
+        \item 既有研究多关注技术投入规模，对技术扩散如何改变组织能力的讨论仍有拓展空间。
+        \item 本研究关注技术扩散、组织协同与服务能力之间的关联机制。
+      \end{itemize}
+    \column{0.38\textwidth}
+      \fdudatacard{41.5\%}{示例指标占比}{虚构数据，仅用于展示模板版式}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \fducontenthead{02 理论框架}{分析框架与研究假设}{Analytical Framework \& Hypotheses}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.48\textwidth}
+      \fducard{机制一：信息整合}{数字平台降低跨部门信息搜寻成本，使服务流程更容易形成统一入口。}
+    \column{0.48\textwidth}
+      \fducard{机制二：组织协同}{技术扩散需要配套的组织规则，单纯工具引入不足以稳定提升治理绩效。}
+  \end{columns}
+  \vspace{0.5cm}
+  {\small\color{Sub}研究假设示例：数字技术扩散程度越高，城市公共服务响应能力越强；组织协同水平越高，该关联越稳定。}
+\end{frame}
+
+\begin{frame}
+  \fducontenthead{03 研究方法}{四步研究流程}{Four-Step Research Design}
+  \centering
+  \begin{tikzpicture}[
+    node distance=0.55cm,
+    every node/.style={font=\small},
+    arrow/.style={-{Stealth[length=2mm]},line width=0.7pt,draw=Muted}
+  ]
+    \node[minimum width=2.5cm,minimum height=1.35cm,align=center,rounded corners=2pt,draw=Line,fill=Tint,text width=2.35cm] (s1) {数据整理\\城市年度面板};
+    \node[minimum width=2.5cm,minimum height=1.35cm,align=center,rounded corners=2pt,draw=Line,fill=Tint,text width=2.35cm,right=of s1] (s2) {变量构造\\技术扩散指标};
+    \node[minimum width=2.5cm,minimum height=1.35cm,align=center,rounded corners=2pt,draw=Line,fill=Tint,text width=2.35cm,right=of s2] (s3) {模型估计\\固定效应模型};
+    \node[minimum width=2.5cm,minimum height=1.35cm,align=center,rounded corners=2pt,draw=FudanBlue,fill=FudanBlue,text=white,text width=2.35cm,right=of s3] (s4) {结果解释\\机制与边界};
+    \draw[arrow] (s1) -- (s2);
+    \draw[arrow] (s2) -- (s3);
+    \draw[arrow] (s3) -- (s4);
+  \end{tikzpicture}
+  \vspace{0.6cm}
+
+  {\small\color{Sub}流程页适合呈现数据处理、变量建构、模型估计和结果解释等环节。}
+\end{frame}
+
+\begin{frame}
+  \fducontenthead{04 实证结果}{图表与模型结果展示}{Figures, Tables \& Model Results}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.53\textwidth}
+      {\fdusans\small 图 1\quad 技术扩散指数的年度变化}\\[5pt]
+      \fbox{\parbox[c][4.25cm][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\centering\color{Muted}图表占位\\可替换为 PDF、PNG 或矢量图}}
+    \column{0.43\textwidth}
+      {\fdusans\small 表 1\quad 基准回归结果}\\[5pt]
+      \rowcolors{2}{white}{Tint}
+      \begin{tabular}{lrr}
+        \arrayrulecolor{FudanBlue}\toprule
+        \rowcolor{FudanBlue}\color{white}变量 & \color{white}(1) & \color{white}(2)\\
+        \midrule
+        技术扩散 & 0.182*** & {\bfseries\color{FudanBlue}0.214***}\\
+        组织协同 & 0.096** & 0.088**\\
+        控制变量 & 是 & 是\\
+        观测值 & 4{,}290 & 4{,}290\\
+        \bottomrule
+      \end{tabular}\\[5pt]
+      {\scriptsize\color{Muted}注：*** p<0.01，** p<0.05。结果为虚构示例。}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \fducontenthead{05 研究结论}{主要结论与创新点}{Main Conclusions \& Contributions}
+  \fdunumitem{01}{技术扩散与公共服务能力提升存在正向关联。}{这一关联在控制城市规模、财政能力和产业结构后仍然稳定。}
+  \fdunumitem{02}{组织协同是技术转化为治理能力的重要条件。}{技术投入只有嵌入组织流程，才更可能形成持续的服务绩效。}
+  \fdunumitem{03}{城市间差异提示政策设计需要关注制度条件。}{示例结论用于展示模板结构，用户应替换为真实研究发现。}
+\end{frame}
+
+\begin{frame}
+  \fducontenthead{05 创新点}{研究贡献示例}{Research Contributions}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.31\textwidth}
+      \fdulabelcard{THEORY}{机制视角}{将技术扩散放入组织协同框架中解释。}
+    \column{0.31\textwidth}
+      \fdulabelcard{METHOD}{指标构造}{展示多源数据汇总后的城市年度指标。}
+    \column{0.31\textwidth}
+      \fdulabelcard{POLICY}{治理含义}{强调工具建设与制度建设的配套关系。}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \fducontenthead{REFERENCES}{主要参考文献}{Selected References}
+  \begin{multicols}{2}
+  \begin{thebibliography}{99}
+    \footnotesize
+    \bibitem{sample1} 张三，李四，2024，《数字治理与公共服务能力》，《社会科学研究》第 3 期。
+    \bibitem{sample2} Chen, M. and Wang, Y. 2023. Digital Transformation and Local Governance. \textit{Journal of Urban Studies}, 60(4): 711--735.
+    \bibitem{sample3} 刘明，2025，《城市治理中的数据平台建设》，北京：示例出版社。
+    \bibitem{sample4} 王芳，2023，《技术扩散与基层治理创新》，《公共管理学报》第 2 期。
+    \bibitem{sample5} Zhao, L., Liu, H. and Sun, K. 2024. Information Integration in Urban Public Services. \textit{Governance Review}, 18(1): 45--69.
+    \bibitem{sample6} 陈刚，赵敏，2022，《数据平台建设与公共服务响应能力》，《中国行政管理》第 7 期。
+    \bibitem{sample7} Smith, J. R. 2021. \textit{Bureaucratic Capacity in the Digital Age}. Cambridge: Example University Press.
+    \bibitem{sample8} 周涛，2025，《组织协同视角下的智慧城市建设》，上海：示例大学出版社。
+  \end{thebibliography}
+  \end{multicols}
+\end{frame}
+
+\fduthankyou{感谢聆听}{THANK YOU FOR YOUR ATTENTION}
+
+\end{document}
